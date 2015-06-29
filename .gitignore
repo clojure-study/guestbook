@@ -9,3 +9,6 @@ pom.xml
 profiles.clj
 /.env
 *.log
+
+/.idea
+*.iml
