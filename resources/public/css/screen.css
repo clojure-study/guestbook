@@ -32,7 +32,7 @@ li time {
     padding-bottom: 20px;
 }
 
-form, .error {
+.comment form, .error {
     width: 520px;
     padding: 30px;
     margin-bottom: 50px;

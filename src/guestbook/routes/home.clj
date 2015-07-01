@@ -22,6 +22,11 @@
       (db/save-message! (assoc params :timestamp (java.util.Date.)))
       (redirect "/"))))
 
+(defn delete-message! [{:keys [params]}]
+  (do
+    (db/delete-message! params)
+    (redirect "/")))
+
 (defn home-page [{:keys [flash]}]
   (layout/render
     "home.html"
@@ -34,4 +39,5 @@
 (defroutes home-routes
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
+           (POST "/delete" request (delete-message! request))
            (GET "/about" [] (about-page)))

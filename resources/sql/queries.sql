@@ -7,3 +7,8 @@ VALUES (:name, :message, :timestamp)
 --name:get-messages
 -- selects all available messages
 SELECT * from guestbook
+
+--name:delete-message!
+-- delete messages
+DELETE from guestbook
+WHERE id = :id;
