@@ -14,6 +14,7 @@
                     <input type="hidden" name="id" value={{item.id}}>
                     <input style="display:inline" type="submit" class="btn btn-primary" value="delete" />
                 </form>
+				<a href="/update?id={{item.id}}" class="btn btn-primary"> update </a>
             </li>
             {% endfor %}
         </ul>
