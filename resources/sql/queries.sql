@@ -12,3 +12,14 @@ SELECT * from guestbook
 -- delete messages
 DELETE from guestbook
 WHERE id = :id;
+
+--name:get-message
+-- select message
+SELECT * from guestbook
+WHERE id = :id
+
+--name:update-message!
+-- update message
+UPDATE guestbook
+SET message = :message
+WHERE id = :id;

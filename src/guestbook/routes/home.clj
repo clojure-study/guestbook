@@ -27,6 +27,18 @@
     (db/delete-message! params)
     (redirect "/")))
 
+(defn update-message [{:keys [params flash]}]
+  (if (empty? params)
+    (redirect "/")
+    (layout/render
+       "update.html"
+       (merge (first (db/get-message params))
+           (select-keys flash [:name :message :errors])))))
+
+(defn update-message! [{:keys [params]}]
+  (db/update-message! params)
+  (redirect "/"))
+
 (defn home-page [{:keys [flash]}]
   (layout/render
     "home.html"
@@ -40,4 +52,6 @@
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
            (POST "/delete" request (delete-message! request))
+           (GET "/update" request (update-message request))
+           (POST "/update" request (update-message! request))
            (GET "/about" [] (about-page)))
