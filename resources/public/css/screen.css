@@ -39,3 +39,7 @@ li time {
     position: relative;
   background: white;
 }
+
+form[action="/delete"] {
+    display: inline;
+}
