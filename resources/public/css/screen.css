@@ -32,7 +32,9 @@ li time {
     padding-bottom: 20px;
 }
 
-form[action="/"], .error {
+form[action="/"],
+form[action="/update"],
+.error {
     width: 520px;
     padding: 30px;
     margin-bottom: 50px;
