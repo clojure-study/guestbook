@@ -28,8 +28,8 @@
     (db/delete-message! {:id id})
     (redirect "/")))
 
-(defn update-message [id]
-  (if (empty? params)
+(defn update-message [id {:keys [flash]}]
+  (if (nil? id)
     (redirect "/")
     (layout/render
        "update.html"
@@ -53,6 +53,6 @@
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
            (POST "/delete/:id" [id] (delete-message! id))
-           (GET "/update/:id" [id] (update-message id))
+           (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
            (GET "/about" [] (about-page)))
