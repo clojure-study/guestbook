@@ -9,6 +9,8 @@ pom.xml
 profiles.clj
 /.env
 *.log
+*.db
+.nrepl-port
 
 /.idea
 *.iml
