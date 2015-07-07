@@ -5,7 +5,8 @@
             [guestbook.db.core :as db]
             [bouncer.core :as b]
             [bouncer.validators :as v]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]])
+  (:import (java.util Date)))
 
 (defn validate-message [params]
   (first
@@ -19,20 +20,20 @@
     (-> (redirect "/")
         (assoc :flash (assoc params :errors errors)))
     (do
-      (db/save-message! (assoc params :timestamp (java.util.Date.)))
+      (db/save-message! (assoc params :timestamp (Date.)))
       (redirect "/"))))
 
-(defn delete-message! [{:keys [params]}]
+(defn delete-message! [id]
   (do
-    (db/delete-message! params)
+    (db/delete-message! {:id id})
     (redirect "/")))
 
-(defn update-message [{:keys [params flash]}]
-  (if (empty? params)
+(defn update-message [id {:keys [flash]}]
+  (if (nil? id)
     (redirect "/")
     (layout/render
        "update.html"
-       (merge (first (db/get-message params))
+       (merge (first (db/get-message {:id id}))
            (select-keys flash [:name :message :errors])))))
 
 (defn update-message! [{:keys [params]}]
@@ -51,7 +52,7 @@
 (defroutes home-routes
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
-           (POST "/delete" request (delete-message! request))
-           (GET "/update" request (update-message request))
+           (POST "/delete/:id" [id] (delete-message! id))
+           (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
            (GET "/about" [] (about-page)))
