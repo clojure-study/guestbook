@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="span12">
+        <div class="comment">
+            <form method="POST" action="/login">
+                {% csrf-field %}
+                <p>
+                    Id:
+                    <input class="form-control"
+                           type="text"
+                           name="id"/>
+                </p>
+                {% if errors.name %}
+                <div class="alert alert-danger">{{errors.name|join}}</div>
+                {% endif %}
+                <p>
+                    Password:
+                    <input class="form-control"
+                           type="text"
+                           name="pw"/>
+                </p>
+                {% if errors.message %}
+                <div class="alert alert-danger">{{errors.message|join}}</div>
+                {% endif %}
+                <input type="submit" class="btn btn-primary" value="Log in" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
