@@ -40,6 +40,10 @@
   (db/update-message! params)
   (redirect "/"))
 
+(defn login [{:keys [params]}]
+  (println params)
+  (redirect "/"))
+
 (defn home-page [{:keys [flash]}]
   (layout/render
     "home.html"
@@ -59,4 +63,5 @@
            (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
            (GET "/login" [] (login-page))
+           (POST "/login" request (login request))
            (GET "/about" [] (about-page)))
