@@ -46,6 +46,9 @@
     (merge {:messages (db/get-messages)}
            (select-keys flash [:name :message :errors]))))
 
+(defn login-page []
+  (layout/render "login.html"))
+
 (defn about-page []
   (layout/render "about.html"))
 
@@ -55,4 +58,5 @@
            (POST "/delete/:id" [id] (delete-message! id))
            (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
+           (GET "/login" [] (login-page))
            (GET "/about" [] (about-page)))

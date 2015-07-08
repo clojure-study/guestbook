@@ -33,6 +33,7 @@ li time {
 }
 
 form[action="/"],
+form[action="/login"],
 form[action="/update"],
 .error {
     width: 520px;

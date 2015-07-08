@@ -16,6 +16,9 @@
             <li {% ifequal page "home.html" %} class="active"{%endifequal%}>
               <a href="{{servlet-context}}/">Home</a>
             </li>
+            <li {% ifequal page "login.html" %} class="active"{%endifequal%}>
+              <a href="{{servlet-context}}/login">Login</a>
+            </li>
             <li {% ifequal page "about.html" %} class="active"{%endifequal%}>
               <a href="{{servlet-context}}/about">About</a>
             </li>
