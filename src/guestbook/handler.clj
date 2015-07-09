@@ -1,7 +1,8 @@
 (ns guestbook.handler
   (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [guestbook.routes.home :refer [home-routes]]
-            
+            [guestbook.routes.login :refer [login-routes]]
+
             [guestbook.middleware :as middleware]
             [guestbook.session :as session]
             [compojure.route :as route]
@@ -69,7 +70,7 @@
 
 (def app
   (-> (routes
-        
+        (wrap-routes #'login-routes middleware/wrap-csrf)
         (wrap-routes #'home-routes middleware/wrap-csrf)
         #'base-routes)
       middleware/wrap-base))

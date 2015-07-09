@@ -19,6 +19,7 @@
         </ul>
     </div>
 </div>
+{% if session.user-id %}
 <div class="row">
     <div class="span12">
         <form method="POST" action="/">
@@ -47,4 +48,5 @@
         </form>
     </div>
 </div>
+{% endif %}
 {% endblock %}
