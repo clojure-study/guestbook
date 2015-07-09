@@ -40,10 +40,11 @@
   (db/update-message! params)
   (redirect "/"))
 
-(defn home-page [{:keys [flash]}]
+(defn home-page [{:keys [session flash]}]
   (layout/render
     "home.html"
-    (merge {:messages (db/get-messages)}
+    (merge {:messages (db/get-messages)
+            :session session}
            (select-keys flash [:name :message :errors]))))
 
 (defn about-page []

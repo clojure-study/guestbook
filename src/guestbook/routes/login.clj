@@ -11,11 +11,11 @@
 (defn login-page []
   (layout/render "login.html"))
 
-(defn login [{:keys [params]}]
-  (println params)
-  (redirect "/"))
+(defn login! [{:keys [params]}]
+  (-> (redirect "/")
+      (assoc-in [:session :user-id] (:id params))))
 
 (defroutes login-routes
            (GET "/login" [] (login-page))
-           (POST "/login" request (login request))
+           (POST "/login" request (login! request))
            )
