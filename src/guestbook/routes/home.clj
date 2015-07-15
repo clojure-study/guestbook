@@ -47,6 +47,9 @@
             :session session}
            (select-keys flash [:name :message :errors]))))
 
+(defn signup-page []
+      (layout/render "signup.html"))
+
 (defn about-page []
   (layout/render "about.html"))
 
@@ -56,4 +59,5 @@
            (POST "/delete/:id" [id] (delete-message! id))
            (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
-           (GET "/about" [] (about-page)))
+           (GET "/about" [] (about-page))
+           (GET "/signup" [] (signup-page)))
