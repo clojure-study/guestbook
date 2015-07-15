@@ -53,6 +53,9 @@
 (defn login-page []
   (layout/render "login.html"))
 
+(defn signup-page []
+      (layout/render "signup.html"))
+
 (defn about-page []
   (layout/render "about.html"))
 
@@ -64,4 +67,5 @@
            (POST "/update" request (update-message! request))
            (GET "/login" [] (login-page))
            (POST "/login" request (login request))
-           (GET "/about" [] (about-page)))
+           (GET "/about" [] (about-page))
+           (GET "/signup" [] (signup-page)))

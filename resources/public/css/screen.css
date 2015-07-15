@@ -35,6 +35,7 @@ li time {
 form[action="/"],
 form[action="/login"],
 form[action="/update"],
+form[action="/signup"],
 .error {
     width: 520px;
     padding: 30px;
