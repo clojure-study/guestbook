@@ -62,4 +62,4 @@
          :repl-options {:init-ns guestbook.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
-         :env {:dev true}}})
+         :env {:dev true :database-url "jdbc:h2:./guestbook_dev.db"}}})
