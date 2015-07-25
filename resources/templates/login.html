@@ -14,10 +14,12 @@
             <form method="POST" action="/login">
                 {% csrf-field %}
                 <p>
-                    Id:
+                    Name:
                     <input class="form-control"
                            type="text"
-                           name="id"/>
+                           name="name"
+                           value="{{name}}"
+                           />
                 </p>
                 {% if errors.name %}
                 <div class="alert alert-danger">{{errors.name|join}}</div>
@@ -25,11 +27,13 @@
                 <p>
                     Password:
                     <input class="form-control"
-                           type="text"
-                           name="pw"/>
+                           type="password"
+                           name="password"
+                           value="{{password}}"
+                           />
                 </p>
-                {% if errors.message %}
-                <div class="alert alert-danger">{{errors.message|join}}</div>
+                {% if errors.password %}
+                <div class="alert alert-danger">{{errors.password|join}}</div>
                 {% endif %}
                 <input type="submit" class="btn btn-primary" value="Log in" />
             </form>

@@ -23,3 +23,16 @@ WHERE id = :id
 UPDATE guestbook
 SET message = :message
 WHERE id = :id;
+
+--name:save-user!
+-- creates a new user
+INSERT INTO users (name, password, timestamp) VALUES (:name, :password, :timestamp)
+
+--name:check-user-exists
+SELECT * from users
+WHERE name = :name
+
+--name:signin-user
+-- select user with name and password
+SELECT * from users
+WHERE name = :name AND password = :password

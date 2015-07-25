@@ -6,10 +6,10 @@
             <form method="POST" action="/signup">
                 {% csrf-field %}
                 <p>
-                    Id:
+                    Name:
                     <input class="form-control"
                            type="text"
-                           name="id"/>
+                           name="name"/>
                 </p>
                 {% if errors.name %}
                 <div class="alert alert-danger">{{errors.name|join}}</div>
@@ -18,10 +18,10 @@
                     Password:
                     <input class="form-control"
                            type="text"
-                           name="pw"/>
+                           name="password"/>
                 </p>
                 {% if errors.message %}
-                <div class="alert alert-danger">{{errors.message|join}}</div>
+                <div class="alert alert-danger">{{errors.password|join}}</div>
                 {% endif %}
                 <input type="submit" class="btn btn-primary" value="Sign up" />
             </form>
