@@ -26,10 +26,12 @@
                 {% csrf-field %}
                 <p>
                     Name:
-                    <input class="form-control"
+                     <input class="form-control"
                            type="text"
                            name="name"
-                           value="{{name}}" />
+                           value="{{session.user-name}}"
+                            readonly
+                            />
                 </p>
                 {% if errors.name %}
                 <div class="alert alert-danger">{{errors.name|join}}</div>
