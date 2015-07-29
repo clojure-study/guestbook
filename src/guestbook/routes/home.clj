@@ -75,6 +75,10 @@
 (defn about-page []
   (layout/render "about.html"))
 
+(defn admin-page []
+  (layout/render "admin.html"
+                 {:users (db/get-names)}))
+
 (defroutes home-routes
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
@@ -84,10 +88,6 @@
            (GET "/about" [] (about-page))
            (GET "/signup" request (signup-page request))
            (POST "/signup" request (save-user! request))
-
-
+           (GET "/admin" [] (admin-page))
 
   )
-
-
-
