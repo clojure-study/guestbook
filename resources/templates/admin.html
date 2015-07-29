@@ -2,9 +2,13 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <div class="comment">
-            <p>admin page 입니다.</p>
-        </div>
+        <ul class="messages">
+            {% for user in users %}
+            <li>
+                <p> {{user.name}}</p>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
