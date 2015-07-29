@@ -8,7 +8,7 @@
 (def db-spec
   {:classname   "org.h2.Driver"
    :subprotocol "h2"
-   :subname     db-store
+   :subname     (str db-store ";AUTO_SERVER=TRUE")
    :make-pool?  true
    :naming      {:keys   clojure.string/lower-case
                  :fields clojure.string/upper-case}})
