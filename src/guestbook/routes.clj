@@ -1,8 +1,8 @@
-(ns guestbook.routes.home
+(ns guestbook.routes
   (:require [guestbook.layout :as layout]
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :refer [ok]]
-            [guestbook.db.core :as db]
+            [guestbook.db :as db]
             [bouncer.core :as b]
             [bouncer.validators :as v]
             [ring.util.response :refer [redirect]])
@@ -51,6 +51,26 @@
             :session session}
            (select-keys flash [:name :message :errors]))))
 
+(defn login-page [{:keys [session flash]}]
+  (layout/render "login.html"
+                 (merge {:session session}
+                        (select-keys flash [:name :password :errors]))
+                 ))
+
+(defn login! [{:keys [params]}]
+  (if-let [user (first (db/signin-user params))]
+    (-> (redirect "/")
+        (assoc-in [:session :user-id] (:user_id user))
+        (assoc-in [:session :user-name] (:name user))
+        )
+    (-> (redirect "/login")
+        (assoc :flash (assoc params :errors {:password "Invalid name or password."})))
+    ))
+
+(defn logout! [{:keys [session]}]
+  (-> (redirect "/")
+      (assoc :session (dissoc session :user-id :user-name))))
+
 (defn signup-page [{:keys [flash]}]
       (layout/render "signup.html"
                      (select-keys flash [:name :password :errors])
@@ -79,15 +99,21 @@
   (layout/render "admin.html"
                  {:users (db/get-names)}))
 
-(defroutes home-routes
+(defroutes app-routes
            (GET "/" request (home-page request))
            (POST "/" request (save-message! request))
            (POST "/delete/:id" [id] (delete-message! id))
            (GET "/update/:id" [id req] (update-message id req))
            (POST "/update" request (update-message! request))
-           (GET "/about" [] (about-page))
+
+           (GET "/login" request (login-page request))
+           (POST "/login" request (login! request))
+           (POST "/logout" request (logout! request))
+
            (GET "/signup" request (signup-page request))
            (POST "/signup" request (save-user! request))
+
            (GET "/admin" [] (admin-page))
 
-  )
+           (GET "/about" [] (about-page))
+           )

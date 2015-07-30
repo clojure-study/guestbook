@@ -1,4 +1,4 @@
-(ns guestbook.db.core
+(ns guestbook.db
   (:require
     [yesql.core :refer [defqueries]]
     [clojure.java.io :as io]))
