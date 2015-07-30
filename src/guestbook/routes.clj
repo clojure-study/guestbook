@@ -2,7 +2,7 @@
   (:require [guestbook.layout :as layout]
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :refer [ok]]
-            [guestbook.db.core :as db]
+            [guestbook.db :as db]
             [bouncer.core :as b]
             [bouncer.validators :as v]
             [ring.util.response :refer [redirect]])
