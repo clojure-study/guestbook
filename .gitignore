@@ -15,3 +15,5 @@ profiles.clj
 /.idea
 *.iml
 *.pem
+.DS_Store
+

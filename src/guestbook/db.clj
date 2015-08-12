@@ -3,7 +3,7 @@
     [yesql.core :refer [defqueries]]
     [clojure.java.io :as io]))
 
-(def db-store (str (.getName (io/file ".")) "/guestbook_dev.db"))
+(def db-store (str (.getName (io/file "~")) "/guestbook_dev.db"))
 
 (def db-spec
   {:classname   "org.h2.Driver"
