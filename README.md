@@ -1,5 +1,5 @@
 # guestbook
-aaaaaaa
+
 ## 처음 시작하기
 
     git clone https://github.com/clojure-study/guestbook.git
