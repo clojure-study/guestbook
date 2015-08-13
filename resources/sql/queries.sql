@@ -6,7 +6,7 @@ VALUES (:name, :message, :timestamp)
 
 --name:get-messages
 -- selects all available messages
-SELECT * from guestbook
+SELECT * from guestbook ORDER BY TIMESTAMP desc
 
 --name:delete-message!
 -- delete messages
@@ -17,6 +17,7 @@ WHERE id = :id;
 -- select message
 SELECT * from guestbook
 WHERE id = :id
+ORDER BY TIMESTAMP desc
 
 --name:update-message!
 -- update message
