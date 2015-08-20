@@ -21,7 +21,7 @@
                            name="password"/>
                 </p>
                 {% if errors.message %}
-                <div class="alert alert-danger">{{errors.password|join}}</div>
+                <div class="alert alert-danger">{{errors.message|join}}</div>
                 {% endif %}
                 <input type="submit" class="btn btn-primary" value="Sign up" />
             </form>

@@ -87,9 +87,11 @@
   (if-let [errors (validate-user params)]
     (-> (redirect "/signup")
         (assoc :flash (assoc params :errors errors)))
-    (do
-      (db/save-user! (assoc params :timestamp (Date.)))
-      (redirect "/login"))))
+    (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
+      (if (< 0 updated-row-cnt)
+        (redirect "/login")
+        (-> (redirect "/signup")
+            (assoc :flash (assoc params :errors {:message "Duplicated name"})))))))
 
 
 (defn about-page []
