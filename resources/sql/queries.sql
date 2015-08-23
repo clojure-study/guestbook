@@ -27,7 +27,9 @@ WHERE id = :id;
 
 --name:save-user!
 -- creates a new user
-INSERT INTO users (name, password, timestamp) VALUES (:name, :password, :timestamp)
+INSERT INTO users (name, password, timestamp)
+SELECT :name, :password, :timestamp
+WHERE NOT EXISTS (SELECT name FROM users WHERE name=:name)
 
 --name:check-user-exists
 SELECT * from users
