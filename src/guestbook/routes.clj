@@ -1,6 +1,6 @@
 (ns guestbook.routes
   (:require [guestbook.layout :as layout]
-            [compojure.core :refer [defroutes GET POST]]
+            [compojure.core :refer [defroutes GET POST DELETE PUT]]
             [ring.util.http-response :refer [ok]]
             [guestbook.db :as db]
             [bouncer.core :as b]
@@ -19,22 +19,22 @@
   (if-let [user-id (:user-id session)]
 
     (if-let [errors (validate-message params)]
-      (-> (redirect "/")
+      (-> (redirect "/guestbooks")
           (assoc :flash (assoc params :errors errors)))
       (do
         (db/save-message! (assoc params :timestamp (Date.)))
-        (redirect "/")))
+        (redirect "/guestbooks")))
     (redirect "/login")
     ))
 
 (defn delete-message! [id]
   (do
     (db/delete-message! {:id id})
-    (redirect "/")))
+    (redirect "/guestbooks")))
 
 (defn update-message [id {:keys [flash]}]
   (if (nil? id)
-    (redirect "/")
+    (redirect "/guestbooks")
     (layout/render
        "update.html"
        (merge (first (db/get-message {:id id}))
@@ -42,11 +42,11 @@
 
 (defn update-message! [{:keys [params]}]
   (db/update-message! params)
-  (redirect "/"))
+  (redirect "/guestbooks"))
 
-(defn home-page [{:keys [session flash]}]
+(defn guest-page [{:keys [session flash]}]
   (layout/render
-    "home.html"
+    "guestbooks.html"
     (merge {:messages (db/get-messages)
             :session session}
            (select-keys flash [:name :message :errors]))))
@@ -59,7 +59,7 @@
 
 (defn login! [{:keys [params]}]
   (if-let [user (first (db/signin-user params))]
-    (-> (redirect "/")
+    (-> (redirect "/guestbooks")
         (assoc-in [:session :user-id] (:user_id user))
         (assoc-in [:session :user-name] (:name user))
         )
@@ -68,7 +68,7 @@
     ))
 
 (defn logout! [{:keys [session]}]
-  (-> (redirect "/")
+  (-> (redirect "/guestbooks")
       (assoc :session (dissoc session :user-id :user-name))))
 
 (defn signup-page [{:keys [flash]}]
@@ -102,11 +102,12 @@
                  {:users (db/get-names)}))
 
 (defroutes app-routes
-           (GET "/" request (home-page request))
-           (POST "/" request (save-message! request))
-           (POST "/delete/:id" [id] (delete-message! id))
-           (GET "/update/:id" [id req] (update-message id req))
-           (POST "/update" request (update-message! request))
+           (GET "/" request (guest-page request))
+           (GET "/guestbooks" request (guest-page request))
+           (POST "/guestbooks" request (save-message! request))
+           (DELETE "/guestbooks/:id" [id] (delete-message! id))
+           (GET "/guestbooks/:id/edit" [id req] (update-message id req))
+           (PUT "/guestbooks" request (update-message! request))
 
            (GET "/login" request (login-page request))
            (POST "/login" request (login! request))

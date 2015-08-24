@@ -2,26 +2,28 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <form method="POST" action="/update">
-                {% csrf-field %}
-                <p>
-                    Name: {{name}}
-                </p>
-                {% if errors.name %}
-                <div class="alert alert-danger">{{errors.name|join}}</div>
-                {% endif %}
-                <p>
-                    Message:
+        <form method="POST" action="/guestbooks">
+
+            {% csrf-field %}
+            <input name="_method" type="hidden" value="PUT">
+            <p>
+                Name: {{name}}
+            </p>
+            {% if errors.name %}
+            <div class="alert alert-danger">{{errors.name|join}}</div>
+            {% endif %}
+            <p>
+                Message:
                 <textarea class="form-control"
                           rows="4"
                           cols="50"
                           name="message">{{message}}</textarea>
-                </p>
-                {% if errors.message %}
-                <div class="alert alert-danger">{{errors.message|join}}</div>
-                {% endif %}
-				<input type="hidden" name="id" value="{{id}}" />
-                <input type="submit" class="btn btn-primary" value="update" />
+            </p>
+            {% if errors.message %}
+            <div class="alert alert-danger">{{errors.message|join}}</div>
+            {% endif %}
+            <input type="hidden" name="id" value="{{id}}" />
+            <input type="submit" class="btn btn-primary" value="update" />
         </form>
     </div>
 </div>
