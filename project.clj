@@ -22,7 +22,10 @@
                  [org.clojure/java.jdbc "0.3.7"]
                  [instaparse "1.4.0"]
                  [yesql "0.5.0-rc2"]
-                 [com.h2database/h2 "1.4.187"]]
+                 [com.h2database/h2 "1.4.187"]
+
+                 [clj-captcha "0.1.1"]
+                 ]
 
   :min-lein-version "2.0.0"
   :uberjar-name "guestbook.jar"

@@ -23,6 +23,11 @@
                 {% if errors.message %}
                 <div class="alert alert-danger">{{errors.message|join}}</div>
                 {% endif %}
+
+                <p>
+                    <img src="/captcha" width="400px" height="350px">
+                    <input type="text" name="captcha" >
+                </p>
                 <input type="submit" class="btn btn-primary" value="Sign up" />
             </form>
         </div>

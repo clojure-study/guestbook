@@ -1,11 +1,14 @@
 (ns guestbook.routes
   (:require [guestbook.layout :as layout]
             [compojure.core :refer [defroutes GET POST DELETE PUT]]
+            [ring.util.response :refer [content-type response]]
             [ring.util.http-response :refer [ok]]
             [guestbook.db :as db]
             [bouncer.core :as b]
             [bouncer.validators :as v]
-            [ring.util.response :refer [redirect]])
+            [ring.util.response :refer [redirect]]
+            [clj-captcha.core :refer [captcha-challenge-as-jpeg captcha-response-correc?]]
+            )
   (:import (java.util Date)))
 
 (defn validate-message [params]
@@ -84,14 +87,16 @@
       :password [v/required [v/min-count 4]])))
 
 (defn save-user! [{:keys [params]}]
-  (if-let [errors (validate-user params)]
-    (-> (redirect "/signup")
-        (assoc :flash (assoc params :errors errors)))
-    (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
-      (if (< 0 updated-row-cnt)
-        (redirect "/login")
-        (-> (redirect "/signup")
-            (assoc :flash (assoc params :errors {:message "Duplicated name"})))))))
+  (if (not (captcha-response-correc? (:captcha params)))
+    (redirect "/signup")
+    (if-let [errors (validate-user params)]
+      (-> (redirect "/signup")
+          (assoc :flash (assoc params :errors errors)))
+      (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
+        (if (< 0 updated-row-cnt)
+          (redirect "/login")
+          (-> (redirect "/signup")
+              (assoc :flash (assoc params :errors {:message "Duplicated name"}))))))))
 
 
 (defn about-page []
@@ -102,6 +107,8 @@
                  {:users (db/get-names)}))
 
 (defroutes app-routes
+           (GET "/captcha" [] (-> (clojure.java.io/input-stream (captcha-challenge-as-jpeg)) response (content-type "img/jpeg")))
+
            (GET "/" request (guest-page request))
            (GET "/guestbooks" request (guest-page request))
            (POST "/guestbooks" request (save-message! request))
