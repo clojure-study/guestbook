@@ -32,7 +32,7 @@ li time {
     padding-bottom: 20px;
 }
 
-form[action="/"],
+form[action="/guestbooks"],
 form[action="/login"],
 form[action="/update"],
 form[action="/signup"],
@@ -44,6 +44,3 @@ form[action="/signup"],
     background: white;
 }
 
-form[action="/delete"] {
-    display: inline;
-}

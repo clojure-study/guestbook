@@ -10,11 +10,12 @@
                 <p> - {{item.name}}</p>
 
                 {% ifequal item.name session.user-name %}
-                <form id="delete-form-{{item.id}}" method="post" action="/delete/{{item.id}}">
+                <form id="delete-form-{{item.id}}" method="post" action="/guestbooks/{{item.id}}">
                     {% csrf-field %}
+                    <input name="_method" type="hidden" value="DELETE">
                 </form>
                 <input type="submit" form="delete-form-{{item.id}}"  class="btn btn-primary" value="delete" />
-                <a href="/update/{{item.id}}" class="btn btn-primary"> update </a>
+                <a href="/guestbooks/{{item.id}}/edit" class="btn btn-primary"> update </a>
                 {% endifequal %}
             </li>
             {% endfor %}
@@ -24,7 +25,7 @@
 {% if session.user-id %}
 <div class="row">
     <div class="span12">
-        <form method="POST" action="/">
+        <form method="POST" action="/guestbooks">
                 {% csrf-field %}
                 <p>
                     Name:
