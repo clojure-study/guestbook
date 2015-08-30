@@ -25,6 +25,8 @@
                  [com.h2database/h2 "1.4.187"]
 
                  [clj-captcha "0.1.1"]
+                 [clj-http "2.0.0"]
+                 [clj-facebook-graph "0.4.0"]
                  ]
 
   :min-lein-version "2.0.0"
@@ -40,28 +42,28 @@
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
             [ragtime/ragtime.lein "0.3.8"]]
-  
 
-  
+
+
   :ring {:handler guestbook.handler/app
          :init    guestbook.handler/init
          :destroy guestbook.handler/destroy
          :uberwar-name "guestbook.war"}
 
-  
-  
+
+
   :profiles
   {:uberjar {:omit-source true
              :env {:production true}
-             
+
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
                         [pjstadig/humane-test-output "0.7.0"]
                         ]
-         
-         
-         
+
+
+
          :repl-options {:init-ns guestbook.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
