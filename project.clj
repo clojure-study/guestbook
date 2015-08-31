@@ -26,7 +26,7 @@
 
                  [clj-captcha "0.1.1"]
                  [clj-http "2.0.0"]
-                 [clj-facebook-graph "0.4.0"]
+                 [mavericklou/clj-facebook-graph "0.5.3"]
                  ]
 
   :min-lein-version "2.0.0"
@@ -54,7 +54,8 @@
 
   :profiles
   {:uberjar {:omit-source true
-             :env {:production true}
+             :env {:production true
+                   :database-url "jdbc:h2:~/guestbook_dev.db"}
 
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
