@@ -8,7 +8,7 @@
             [bouncer.core :as b]
             [bouncer.validators :as v]
             [ring.util.response :refer [redirect]]
-            [clj-captcha.core :refer [captcha-challenge-as-jpeg captcha-response-correc?]]
+            [clj-recaptcha.client-v2 :as recaptcha ]
             )
   (:import (java.util Date)))
 
@@ -87,8 +87,12 @@
       :name [v/required [v/min-count 3]]
       :password [v/required [v/min-count 4]])))
 
+(defn recaptcha-valid? [g-recaptcha-response]
+  (let [valid (recaptcha/verify "6LdVYwwTAAAAAM6tVEksKMOaVfvFb7-CfPOveMoo" g-recaptcha-response)]
+    (:valid valid)))
+
 (defn save-user! [{:keys [params]}]
-  (if (not (captcha-response-correc? (:captcha params)))
+  (if (not (recaptcha-valid? (:g-recaptcha-response params)))
     (redirect "/signup")
     (if-let [errors (validate-user params)]
       (-> (redirect "/signup")
@@ -99,7 +103,6 @@
           (-> (redirect "/signup")
               (assoc :flash (assoc params :errors {:message "Duplicated name"}))))))))
 
-
 (defn about-page []
   (layout/render "about.html"))
 
@@ -108,8 +111,6 @@
                  {:users (db/get-names)}))
 
 (defroutes app-routes
-           (GET "/captcha" [] (-> (clojure.java.io/input-stream (captcha-challenge-as-jpeg)) response (content-type "img/jpeg")))
-
            (GET "/" request (guest-page request))
            (GET "/guestbooks" request (guest-page request))
            (POST "/guestbooks" request (save-message! request))

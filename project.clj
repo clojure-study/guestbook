@@ -24,7 +24,8 @@
                  [yesql "0.5.0-rc2"]
                  [com.h2database/h2 "1.4.187"]
 
-                 [clj-captcha "0.1.1"]
+                 [clj-recaptcha "0.0.2"]
+
                  [clj-http "2.0.0"]
                  [mavericklou/clj-facebook-graph "0.5.3"]
                  ]

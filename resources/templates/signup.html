@@ -24,13 +24,13 @@
                 <div class="alert alert-danger">{{errors.message|join}}</div>
                 {% endif %}
 
-                <p>
-                    <img src="/captcha" width="400px" height="350px">
-                    <input type="text" name="captcha" >
-                </p>
+                <div class="g-recaptcha" data-sitekey="6LdVYwwTAAAAAE-vu5yBCBviv4fl4LkhJmFS4lFt"></div>
                 <input type="submit" class="btn btn-primary" value="Sign up" />
             </form>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block head-scripts %}
+    {% script "https://www.google.com/recaptcha/api.js" %}
 {% endblock %}
