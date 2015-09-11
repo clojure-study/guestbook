@@ -8,7 +8,7 @@
             [bouncer.core :as b]
             [bouncer.validators :as v]
             [ring.util.response :refer [redirect]]
-            [clj-recaptcha.client-v2 :as recaptcha ]
+            [guestbook.signup.core :as signup ]
             )
   (:import (java.util Date)))
 
@@ -75,33 +75,6 @@
   (-> (redirect "/guestbooks")
       (assoc :session (dissoc session :user-id :user-name))))
 
-(defn signup-page [{:keys [flash]}]
-      (layout/render "signup.html"
-                     (select-keys flash [:name :password :errors])
-                     ))
-
-(defn validate-user [params]
-  (first
-    (b/validate
-      params
-      :name [v/required [v/min-count 3]]
-      :password [v/required [v/min-count 4]])))
-
-(defn recaptcha-valid? [g-recaptcha-response]
-  (let [valid (recaptcha/verify "6LdVYwwTAAAAAM6tVEksKMOaVfvFb7-CfPOveMoo" g-recaptcha-response)]
-    (:valid valid)))
-
-(defn save-user! [{:keys [params]}]
-  (if (not (recaptcha-valid? (:g-recaptcha-response params)))
-    (redirect "/signup")
-    (if-let [errors (validate-user params)]
-      (-> (redirect "/signup")
-          (assoc :flash (assoc params :errors errors)))
-      (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
-        (if (< 0 updated-row-cnt)
-          (redirect "/login")
-          (-> (redirect "/signup")
-              (assoc :flash (assoc params :errors {:message "Duplicated name"}))))))))
 
 (defn about-page []
   (layout/render "about.html"))
@@ -124,8 +97,8 @@
 
            (GET "/login/facebook/callback" request (facebook-callback request))
 
-           (GET "/signup" request (signup-page request))
-           (POST "/signup" request (save-user! request))
+           (GET "/signup" request (signup/go-page request))
+           (POST "/signup" request (signup/signup! request))
 
            (GET "/admin" [] (admin-page))
 
