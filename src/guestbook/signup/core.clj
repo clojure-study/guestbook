@@ -10,7 +10,7 @@
 
 (defn recaptcha-valid? [g-recaptcha-response]
   (let [valid (recaptcha/verify "6LcUqAwTAAAAAMUjkfdBGPUuQVJ0OZy4tBcVq-8J" g-recaptcha-response)]
-    (:valid valid)))
+    (:valid? valid)))
 
 (defn go-page [{:keys [flash]}]
   (layout/render "signup.html"
@@ -30,8 +30,7 @@
     (if-let [errors (validate-user params)]
       (-> (redirect "/signup")
           (assoc :flash (assoc params :errors errors)))
-      (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
-        (if (< 0 updated-row-cnt)
-          (redirect "/login")
-          (-> (redirect "/signup")
-              (assoc :flash (assoc params :errors {:message "Duplicated name"}))))))))
+      (if (= 1 (count (db/check-user-exists params)))
+        (-> (redirect "/signup") (assoc :flash (assoc params :errors {:message "중복된 계정입니다."})))
+        (do (db/save-user! (assoc params :facebookid "" :timestamp (Date.)))
+            (redirect "/login"))))))
