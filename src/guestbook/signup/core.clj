@@ -24,13 +24,35 @@
       :name [v/required [v/min-count 3]]
       :password [v/required [v/min-count 4]])))
 
-(defn signup! [{:keys [params]}]
-  (if (not (recaptcha-valid? (:g-recaptcha-response params)))
-    (redirect "/signup")
-    (if-let [errors (validate-user params)]
-      (-> (redirect "/signup")
-          (assoc :flash (assoc params :errors errors)))
-      (if (= 1 (count (db/check-user-exists params)))
-        (-> (redirect "/signup") (assoc :flash (assoc params :errors {:message "중복된 계정입니다."})))
-        (do (db/save-user! (assoc params :facebookid "" :timestamp (Date.)))
-            (redirect "/login"))))))
+(defn redirect-errors [errors params]
+  (if (:has-captcha-error errors)
+    (-> (redirect "/signup") (assoc :flash {:errors {:message "captcha"}}))
+    (if (:has-field-errors errors)
+      (-> (redirect "/signup") (assoc :flash (assoc params :errors (:has-field-errors errors))))
+      (if (:duplicated-name errors)
+        (-> (redirect "/signup") (assoc :flash (assoc params :errors {:message "중복된 계정입니다."})))))))
+
+
+(defn duplicated-name? [params]
+  (= 1 (count (db/check-user-exists params))))
+
+(defn validate-signup [params]
+  {:has-captcha-error (not (recaptcha-valid? (:g-recaptcha-response params)))
+   :has-field-errors (validate-user params)
+   :duplicated-name (duplicated-name? params)})
+
+(defn save-user! [params]
+  (do (db/save-user! (assoc params :facebookid "" :timestamp (Date.)))
+      (redirect "/login")))
+
+(defn signup!
+  ([{:keys [params]}]
+   (signup! (validate-signup params)
+            params))
+
+  ([errors  params]
+   (if (or (:has-captcha-error errors)
+           (:has-field-errors errors)
+           (:duplicated-name errors))
+     (redirect-errors errors params)
+     (save-user! params))))
