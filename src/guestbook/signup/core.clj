@@ -37,9 +37,13 @@
   (= 1 (count (db/check-user-exists params))))
 
 (defn validate-signup [params]
-  {:has-captcha-error (not (recaptcha-valid? (:g-recaptcha-response params)))
-   :has-field-errors (validate-user params)
-   :duplicated-name (duplicated-name? params)})
+  (let [errors {:has-captcha-error (not (recaptcha-valid? (:g-recaptcha-response params)))
+                :has-field-errors (validate-user params)
+                :duplicated-name (duplicated-name? params)}]
+    (if (or (:has-captcha-error errors)
+            (:has-field-errors errors)
+            (:duplicated-name errors))
+      errors)))
 
 (defn save-user! [params]
   (do (db/save-user! (assoc params :facebookid "" :timestamp (Date.)))
@@ -47,12 +51,6 @@
 
 (defn signup!
   ([{:keys [params]}]
-   (signup! (validate-signup params)
-            params))
-
-  ([errors  params]
-   (if (or (:has-captcha-error errors)
-           (:has-field-errors errors)
-           (:duplicated-name errors))
+   (if-let [errors (validate-signup params)]
      (redirect-errors errors params)
      (save-user! params))))

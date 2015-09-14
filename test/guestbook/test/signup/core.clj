@@ -49,7 +49,12 @@
     #(is (= {:has-captcha-error false
              :has-field-errors {}
              :duplicated-name true}
-            (validate-signup :any)))))
+            (validate-signup :any))))
+  (with-redefs-fn
+    {#'guestbook.signup.core/recaptcha-valid? (fn [_] true)
+     #'guestbook.signup.core/validate-user (fn [_] nil)
+     #'guestbook.signup.core/duplicated-name? (fn [_] false)}
+    #(is (nil? (validate-signup :any)))))
 
 
 
