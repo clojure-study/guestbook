@@ -1,5 +1,5 @@
 # guestbook
-
+[![Build Status](https://travis-ci.org/clojure-study/guestbook.svg?branch=master)](https://travis-ci.org/clojure-study/guestbook)
 ## 접속주소
 http://52.68.124.223:3000/
 
