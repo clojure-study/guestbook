@@ -8,7 +8,7 @@
             [bouncer.core :as b]
             [bouncer.validators :as v]
             [ring.util.response :refer [redirect]]
-            [clj-captcha.core :refer [captcha-challenge-as-jpeg captcha-response-correc?]]
+            [guestbook.signup.core :as signup ]
             )
   (:import (java.util Date)))
 
@@ -75,30 +75,6 @@
   (-> (redirect "/guestbooks")
       (assoc :session (dissoc session :user-id :user-name))))
 
-(defn signup-page [{:keys [flash]}]
-      (layout/render "signup.html"
-                     (select-keys flash [:name :password :errors])
-                     ))
-
-(defn validate-user [params]
-  (first
-    (b/validate
-      params
-      :name [v/required [v/min-count 3]]
-      :password [v/required [v/min-count 4]])))
-
-(defn save-user! [{:keys [params]}]
-  (if (not (captcha-response-correc? (:captcha params)))
-    (redirect "/signup")
-    (if-let [errors (validate-user params)]
-      (-> (redirect "/signup")
-          (assoc :flash (assoc params :errors errors)))
-      (let [updated-row-cnt (db/save-user! (assoc params :timestamp (Date.)))]
-        (if (< 0 updated-row-cnt)
-          (redirect "/login")
-          (-> (redirect "/signup")
-              (assoc :flash (assoc params :errors {:message "Duplicated name"}))))))))
-
 
 (defn about-page []
   (layout/render "about.html"))
@@ -108,8 +84,6 @@
                  {:users (db/get-names)}))
 
 (defroutes app-routes
-           (GET "/captcha" [] (-> (clojure.java.io/input-stream (captcha-challenge-as-jpeg)) response (content-type "img/jpeg")))
-
            (GET "/" request (guest-page request))
            (GET "/guestbooks" request (guest-page request))
            (POST "/guestbooks" request (save-message! request))
@@ -123,8 +97,8 @@
 
            (GET "/login/facebook/callback" request (facebook-callback request))
 
-           (GET "/signup" request (signup-page request))
-           (POST "/signup" request (save-user! request))
+           (GET "/signup" request (signup/go-page request))
+           (POST "/signup" request (signup/signup! request))
 
            (GET "/admin" [] (admin-page))
 
