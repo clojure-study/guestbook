@@ -11,19 +11,19 @@ SELECT * from guestbook ORDER BY TIMESTAMP desc
 --name:delete-message!
 -- delete messages
 DELETE from guestbook
-WHERE id = :id;
+WHERE id::varchar = :id
 
 --name:get-message
 -- select message
 SELECT * from guestbook
-WHERE id = :id
+WHERE id::varchar = :id
 ORDER BY TIMESTAMP desc
 
 --name:update-message!
 -- update message
 UPDATE guestbook
 SET message = :message
-WHERE id = :id;
+WHERE id::varchar = :id
 
 --name:save-user!
 -- creates a new user

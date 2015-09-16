@@ -1,5 +1,5 @@
 CREATE TABLE users
-(user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+(user_id SERIAL PRIMARY KEY,
  name VARCHAR(60),
  password VARCHAR(200),
  timestamp TIMESTAMP);

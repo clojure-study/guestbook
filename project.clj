@@ -19,10 +19,9 @@
                  [org.clojure/tools.nrepl "0.2.10"]
                  [ring-server "0.4.0"]
                  [ragtime "0.3.9"]
-                 [org.clojure/java.jdbc "0.3.7"]
                  [instaparse "1.4.0"]
                  [yesql "0.5.0-rc2"]
-                 [com.h2database/h2 "1.4.187"]
+                 [org.postgresql/postgresql "9.4-1201-jdbc41"]
 
                  [clj-recaptcha "0.0.2"]
 
@@ -56,7 +55,7 @@
   :profiles
   {:uberjar {:omit-source true
              :env {:production true
-                   :database-url "jdbc:h2:~/guestbook_dev.db"}
+                   :database-url "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=guestgres"}
 
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
@@ -69,4 +68,5 @@
          :repl-options {:init-ns guestbook.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
-         :env {:dev true :database-url "jdbc:h2:~/guestbook_dev.db"}}})
+         :env {:dev true
+               :database-url "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=guestgres"}}})

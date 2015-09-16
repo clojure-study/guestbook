@@ -1,1 +1,1 @@
-ALTER TABLE users DROP INDEX name;
+ALTER TABLE users DROP CONSTRAINT unique_name;

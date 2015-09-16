@@ -1,1 +1,1 @@
-ALTER TABLE users ADD UNIQUE KEY (name);
+ALTER TABLE users ADD CONSTRAINT unique_name UNIQUE (name);
