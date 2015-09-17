@@ -12,6 +12,17 @@ http://52.68.124.223:3000/
 
 실행 후 웹 브라우저로 [http://localhost:3000](http://localhost:3000) 에 접속하여 확인
 
+
+## PostgreSQL 데이터베이스 연동하기
+
+### project.clj 수정하기
+:database-url가 2개 있는데 모두 수정하기. 
+   jdbc:postgresql://호스트이름(또는 주소):포트번호/데이터베이스이름?user=이름&password=비밀번호
+
+### db.clj 수정하기
+db-spec에서 :subname, :user, :password를 위의 :database-url의 내용에 맞춰 수정하기 
+
+
 ## 배포하기
 #### 빌드
     $ cd guestbook
