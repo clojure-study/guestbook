@@ -1,7 +1,7 @@
 (ns guestbook.core
   (:require [guestbook.handler :refer [app init destroy]]
             [ring.adapter.jetty :refer [run-jetty]]
-            
+
             [ring.middleware.reload :as reload]
             [ragtime.main]
             [taoensso.timbre :as timbre]
@@ -40,7 +40,7 @@
 (defn migrate [args]
   (ragtime.main/-main
     "-r" "ragtime.sql.database"
-    "-d" (env :database-url)
+    "-d" "jdbc:h2:~/guestbook_dev.db" ;(env :database-url)
     "-m" "ragtime.sql.files/migrations"
     (clojure.string/join args)))
 
@@ -49,4 +49,3 @@
     "migrate" (migrate args)
     "rollback" (migrate args)
     (start-app args)))
-  
