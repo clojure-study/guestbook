@@ -1,73 +1,78 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% style "/components/bootstrap/3.3.2/css/bootstrap.min.css" %}
-    {% style "/components/bootstrap/3.3.2/css/bootstrap-theme.min.css" %}
-    {% style "/css/screen.css" %}
-    {% block head-scripts %}
-    {% endblock %}
-    <title>Welcome to guestbook</title>
-  </head>
-  <body>
-    <!-- navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <a href="https://github.com/clojure-study/guestbook">
-          <img style="position: absolute; top: 0; right: 0; border: 0;"
-               src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
-        </a>
-        <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{servlet-context}}/guestbooks">
-              {% if session.user-id %}
-              Hello! {{session.user-name}}
-              {% else %}
-              guestbook
-              {% endif %}
-            </a>
-        </div>
-        <div id="bs-navbar" class="navbar-collapse collapse ">
-          <ul class="nav navbar-nav">
-            <li {% ifequal page "login.html" %} class="active"{%endifequal%}>
-              <a href="{{servlet-context}}/login">Login</a>
-            </li>
-            <li {% ifequal page "signup.html" %} class="active"{%endifequal%}>
-              <a href="{{servlet-context}}/signup">Signup</a>
-            </li>
-            <li {% ifequal page "admin.html" %} class="active"{%endifequal%}>
-              <a href="{{servlet-context}}/admin">Admin</a>
-            </li>
-            <li {% ifequal page "guestbooks.html" %} class="active"{%endifequal%}>
-            <a href="{{servlet-context}}/guestbooks">Guest Books</a>
-            </li>
-            <li {% ifequal page "about.html" %} class="active"{%endifequal%}>
-            <a href="{{servlet-context}}/about">About</a>
-            </li>
-          </ul>
-        </div>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% style "/components/bootstrap/3.3.2/css/bootstrap.min.css" %}
+  {% style "/components/bootstrap/3.3.2/css/bootstrap-theme.min.css" %}
+  {% style "/css/screen.css" %}
+  {% block head-scripts %}
+  {% endblock %}
+  <title>Welcome to guestbook</title>
+</head>
+<body>
+<!-- navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{servlet-context}}/guestbooks">
+        {% if session.user-id %}
+        Hello! {{session.user-name}}
+        {% else %}
+        guestbook
+        {% endif %}
+      </a>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse ">
+      <ul class="nav navbar-nav">
+        <li {% ifequal page "guestbooks.html" %} class="active"{%endifequal%}>
+        <a href="{{servlet-context}}/guestbooks">Guest Books</a>
+        </li>
+        {% if session.user-id %}
+        <li {% ifequal page "admin.html" %} class="active"{%endifequal%}>
+        <a href="{{servlet-context}}/admin">Admin</a>
+        </li>
+        {% endif %}
+        <li {% ifequal page "about.html" %} class="active"{%endifequal%}>
+        <a href="{{servlet-context}}/about">About</a>
+        </li>
+      </ul>
+
+      {% if session.user-id %}
+      <form method="POST" action="/logout" class="navbar-form navbar-right">
+        {% csrf-field %}
+        <input type="submit" class="btn btn-success" value="Log out" />
+      </form>
+      {% else %}
+      <div class="navbar-form navbar-right">
+        <a href="{{servlet-context}}/login" class="btn btn-success" >Login</a>
+        <a href="{{servlet-context}}/signup" class="btn btn-success">Signup</a>
       </div>
+      {% endif %}
     </div>
+  </div>
+</nav>
 
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-    </div>
-    <!-- scripts and styles -->
-    {% script "/components/jquery/jquery-2.1.1.min.js" %}
-    {% script "/components/bootstrap/3.3.2/js/bootstrap.min.js" %}
+<div class="container">
+  {% block content %}
+  {% endblock %}
+</div>
+<!-- scripts and styles -->
+{% script "/components/jquery/jquery-2.1.1.min.js" %}
+{% script "/components/bootstrap/3.3.2/js/bootstrap.min.js" %}
 
-    <script type="text/javascript">
-      var context = "{{servlet-context}}";
-    </script>
-    {% block page-scripts %}
-    {% endblock %}
-  </body>
+<script type="text/javascript">
+  var context = "{{servlet-context}}";
+</script>
+{% block page-scripts %}
+{% endblock %}
+</body>
 </html>
 

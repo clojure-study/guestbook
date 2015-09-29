@@ -76,12 +76,12 @@
       (assoc :session (dissoc session :user-id :user-name))))
 
 
-(defn about-page []
-  (layout/render "about.html"))
+(defn about-page [{:keys [session]}]
+  (layout/render "about.html" {:session session}))
 
-(defn admin-page []
+(defn admin-page [{:keys [session]}]
   (layout/render "admin.html"
-                 {:users (db/get-names)}))
+                 (merge {:users (db/get-names)} {:session session})))
 
 (defroutes app-routes
            (GET "/" request (guest-page request))
@@ -100,7 +100,7 @@
            (GET "/signup" request (signup/go-page request))
            (POST "/signup" request (signup/signup! request))
 
-           (GET "/admin" [] (admin-page))
+           (GET "/admin" request (admin-page request))
 
-           (GET "/about" [] (about-page))
+           (GET "/about" request (about-page request))
            )

@@ -1,16 +1,17 @@
 body {
+    padding-top: 50px;
+    /*
     height: 100%;
-    padding-top: 70px;
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     background: #eaeaea;
     width: 550px;
     margin: 0 auto;
+    */
 }
 
 .messages {
     background: white;
-    width: 520px;
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -38,7 +39,6 @@ form[action="/login"],
 form[action="/update"],
 form[action="/signup"],
 .error {
-    width: 520px;
     padding: 30px;
     position: relative;
     background: white;
