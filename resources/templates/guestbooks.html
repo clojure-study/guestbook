@@ -1,57 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row">
-    <div class="span12">
-        <ul class="messages">
-            {% for item in messages %}
-            <li>
-                <time>{{item.timestamp|date:"yyyy-MM-dd HH:mm"}}</time>
-                <pre>{{item.message}}</pre>
-                <p> - {{item.name}}</p>
-
-                {% ifequal item.name session.user-name %}
-                <form id="delete-form-{{item.id}}" method="post" action="/guestbooks/{{item.id}}">
-                    {% csrf-field %}
-                    <input name="_method" type="hidden" value="DELETE">
-                </form>
-                <input type="submit" form="delete-form-{{item.id}}"  class="btn btn-primary" value="delete" />
-                <a href="/guestbooks/{{item.id}}/edit" class="btn btn-primary"> update </a>
-                {% endifequal %}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
 {% if session.user-id %}
 <div class="row">
-    <div class="span12">
-        <form method="POST" action="/guestbooks">
-                {% csrf-field %}
-                <p>
-                    Name:
-                     <input class="form-control"
-                           type="text"
-                           name="name"
-                           value="{{session.user-name}}"
-                            readonly
-                            />
-                </p>
-                {% if errors.name %}
-                <div class="alert alert-danger">{{errors.name|join}}</div>
-                {% endif %}
-                <p>
-                    Message:
+    <form method="POST" action="/guestbooks">
+        {% csrf-field %}
+        <input class="form-control"
+               type="hidden"
+               name="name"
+               value="{{session.user-name}}"
+               readonly
+                />
+        {% if errors.name %}
+        <div class="alert alert-danger">{{errors.name|join}}</div>
+        {% endif %}
+        <p>
+            Message:
                 <textarea class="form-control"
                           rows="4"
                           cols="50"
                           name="message">{{message}}</textarea>
-                </p>
-                {% if errors.message %}
-                <div class="alert alert-danger">{{errors.message|join}}</div>
-                {% endif %}
-                <input type="submit" class="btn btn-primary" value="comment" />
-        </form>
-    </div>
+        </p>
+        {% if errors.message %}
+        <div class="alert alert-danger">{{errors.message|join}}</div>
+        {% endif %}
+        <input type="submit" class="btn btn-primary" value="comment" />
+    </form>
 </div>
 {% endif %}
+<div class="row">
+    <ul class="messages">
+        {% for item in messages %}
+        <li>
+            {{item.name}} <time>{{item.timestamp|date:"yyyy-MM-dd HH:mm"}}</time>
+            {% ifequal item.name session.user-name %}
+            <input type="submit" form="delete-form-{{item.id}}"  class="btn btn-primary" value="delete" />
+            <a href="/guestbooks/{{item.id}}/edit" class="btn btn-primary"> update </a>
+            {% endifequal %}
+            <pre>{{item.message}}</pre>
+
+            {% ifequal item.name session.user-name %}
+            <form id="delete-form-{{item.id}}" method="post" action="/guestbooks/{{item.id}}">
+                {% csrf-field %}
+                <input name="_method" type="hidden" value="DELETE">
+            </form>
+            {% endifequal %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
