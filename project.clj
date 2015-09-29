@@ -8,7 +8,7 @@
                  [com.taoensso/timbre "3.4.0"]
                  [com.taoensso/tower "3.0.2"]
                  [markdown-clj "0.9.66"]
-                 [environ "1.0.0"]
+                 [environ "1.0.1"]
                  [compojure "1.3.4"]
                  [ring/ring-defaults "0.1.5"]
                  [ring/ring-session-timeout "0.1.0"]
@@ -55,7 +55,15 @@
   :profiles
   {:uberjar {:omit-source true
              :env {:production true
-                   :database-url "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=guestgres"}
+                   :db-spec {:classname   "org.postgresql.Driver"
+                             :subprotocol "postgresql"
+                             :subname     "//127.0.0.1:5432/cks"
+                             :user        "cks"
+                             :password    "zmfhfwjzhfldktmxjel"
+                             :make-pool?  true
+                             :naming      {:keys   clojure.string/lower-case
+                                           :fields clojure.string/upper-case}
+                             }}
 
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
@@ -69,4 +77,14 @@
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
          :env {:dev true
-               :database-url "jdbc:postgresql://172.17.0.1:5432/postgres?user=postgres&password=guestgres"}}})
+               :db-spec {:classname   "org.postgresql.Driver"
+                         :subprotocol "postgresql"
+                         :subname     "//127.0.0.1:5432/cks"
+                         :user        "cks"
+                         :password    "zmfhfwjzhfldktmxjel"
+                         :make-pool?  true
+                         :naming      {:keys   clojure.string/lower-case
+                                       :fields clojure.string/upper-case}
+                         }
+               }
+         }})

@@ -3,28 +3,20 @@
     [yesql.core :refer [defqueries]]
     [clojure.java.io :as io]
     [cheshire.core :refer [generate-string parse-string]]
-    [clojure.java.jdbc :as jdbc])
+    [clojure.java.jdbc :as jdbc]
+    [environ.core :refer [env]])
   (:import org.postgresql.util.PGobject
            org.postgresql.jdbc4.Jdbc4Array
            clojure.lang.IPersistentMap
            clojure.lang.IPersistentVector
            [java.sql
-            BatchUpdateException
             Date
             Timestamp
             PreparedStatement]))
 
 
 (def db-spec
-  {:classname   "org.postgresql.Driver"
-   :subprotocol "postgresql"
-   :subname     "//172.17.0.1:5432/postgres"
-   :user        "postgres"
-   :password    "guestgres"
-   :make-pool?  true
-   :naming      {:keys   clojure.string/lower-case
-                 :fields clojure.string/upper-case}
-   })
+  (env :db-spec))
 
 (defqueries "sql/queries.sql" {:connection db-spec})
 

@@ -14,28 +14,18 @@ http://52.68.124.223:3000/
 
 맥의 경우 가장 쉬운 방법은 다음과 같다: [http://postgresapp.com/](http://postgresapp.com/) 에서 다운로드하고, `/Applications`로 옮기고, 더블클릭하여 실행한다.
 
-### 3. PostgreSQL 에 연결시키기 위해 소스 수정
+### 3. psql 접속 및 User, Database  생성 
+psql 에 접속하여  user 와 Database 를 생성한다. 
 
-#### project.clj 수정하기
-`:database-url`가 2개 있는데 모두 수정한다.
-```clojure
-:databse-url "jdbc:postgresql://호스트이름(또는 주소):포트번호/데이터베이스이름?user=이름&password=비밀번호"
-```
+#### Database 생성 
 
-예를 들어, 맥에서 Postgres.app을 사용한 manmyung의 경우는 다음처럼 수정하였다.
-```clojure
-:database-url "jdbc:postgresql://localhost:5432/manmyung?user=manmyung&password="
-```
+`project.clj` 의 :profiles :dev :db-spec 참고하여 database 를 생성한다.  
 
-#### db.clj 수정하기
-`db-spec`에서 `:subname`, `:user`, `:password`를 위의 `:database-url`의 내용에 맞춰 수정한다.
+    psql# CRATE DATABASE {database name};
 
-예를 들어, 맥에서 Postgres.app을 사용한 manmyung의 경우는 다음처럼 수정하였다.
-```clojure
-   :subname     "//localhost:5432/manmyung"
-   :user        "manmyung"
-   :password    ""
-```
+#### User 생성 
+
+    psql# CREATE USER {user name} WITH PASSWORD {password name};
 
 ### 4. DB 초기 셋업
     $ lein run migrate
