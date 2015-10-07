@@ -42,6 +42,7 @@ psql 에 접속하여  user 와 Database 를 생성한다.
     $ lein uberjar
     
 #### 파일 업로드
+    $ scp -i "clojurestudy-aws.pem" .lein-env ec2-user@52.68.124.223:~
     $ scp -i "clojurestudy-aws.pem" target/guestbook.jar ec2-user@52.68.124.223:~/target
 여기에서 path는 배포자의 개발 환경에 따라 다를 수 있음
 
