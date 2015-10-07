@@ -1,6 +1,6 @@
 (ns guestbook.middleware
   (:require [guestbook.session :as session]
-            [guestbook.layout :refer [*servlet-context*]]
+            [guestbook.layout :refer [*servlet-context* *session*]]
             [taoensso.timbre :as timbre]
             [environ.core :refer [env]]
             [clojure.java.io :as io]
@@ -25,6 +25,11 @@
                 ;; .getContextPath might not exist
                 (try (.getContextPath context)
                      (catch IllegalArgumentException _ context)))]
+      (handler request))))
+
+(defn wrap-session [handler]
+  (fn [request]
+    (binding [*session* (:session request)]
       (handler request))))
 
 (defn wrap-internal-error [handler]

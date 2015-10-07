@@ -70,4 +70,5 @@
   (-> (routes
         (wrap-routes #'app-routes middleware/wrap-csrf)
         #'base-routes)
+      middleware/wrap-session
       middleware/wrap-base))

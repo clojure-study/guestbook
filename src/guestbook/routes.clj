@@ -48,17 +48,15 @@
   (db/update-message! params)
   (redirect "/guestbooks"))
 
-(defn guest-page [{:keys [session flash]}]
+(defn guest-page [{:keys [flash]}]
   (layout/render
     "guestbooks.html"
-    (merge {:messages (db/get-messages)
-            :session session}
+    (merge {:messages (db/get-messages)}
            (select-keys flash [:name :message :errors]))))
 
-(defn login-page [{:keys [session flash]}]
+(defn login-page []
   (layout/render "login.html"
-                 (merge {:session session}
-                        (select-keys flash [:name :password :errors]))
+                 (select-keys flash [:name :password :errors])
                  ))
 
 (defn login! [{:keys [params]}]
@@ -76,12 +74,11 @@
       (assoc :session (dissoc session :user-id :user-name))))
 
 
-(defn about-page [{:keys [session]}]
-  (layout/render "about.html" {:session session}))
+(defn about-page []
+  (layout/render "about.html"))
 
-(defn admin-page [{:keys [session]}]
-  (layout/render "admin.html"
-                 (merge {:users (db/get-names)} {:session session})))
+(defn admin-page []
+  (layout/render "admin.html" {:users (db/get-names)} ))
 
 (defroutes app-routes
            (GET "/" request (guest-page request))
@@ -91,7 +88,7 @@
            (GET "/guestbooks/:id/edit" [id req] (update-message id req))
            (PUT "/guestbooks" request (update-message! request))
 
-           (GET "/login" request (login-page request))
+           (GET "/login" [] (login-page))
            (POST "/login" request (login! request))
            (POST "/logout" request (logout! request))
 
@@ -100,7 +97,7 @@
            (GET "/signup" request (signup/go-page request))
            (POST "/signup" request (signup/signup! request))
 
-           (GET "/admin" request (admin-page request))
+           (GET "/admin" [] (admin-page))
 
-           (GET "/about" request (about-page request))
+           (GET "/about" [] (about-page))
            )
