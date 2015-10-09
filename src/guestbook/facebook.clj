@@ -8,7 +8,7 @@
 (defonce facebook-app-info
   {:client-id "1068136783211255"
    :client-secret "d36aa393d055fc311ff097ba2dc40719"
-   :redirect-uri "http://52.68.124.223:3000/login/facebook/callback"
+   :redirect-uri "http://52.68.124.223/login/facebook/callback"
    :scope ["email"]})
 
 (defn get-facebook-user [facebook-id]
