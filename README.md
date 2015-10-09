@@ -1,7 +1,7 @@
 # guestbook
 [![Build Status](https://travis-ci.org/clojure-study/guestbook.svg?branch=master)](https://travis-ci.org/clojure-study/guestbook)
 ## 접속주소
-http://52.68.124.223:3000/
+http://52.68.124.223
 
 ## 개발 시작하기
 
@@ -52,10 +52,10 @@ ssh로 접속하여 screen 세션에 들어감
     $ ssh -i "clojurestudy-aws.pem" ec2-user@52.68.124.223
     $ screen -r
 
-서버 정지하고 다시 시작
+서버 정지하고 80포트로 다시 시작
 
     Ctrl + c
-    $ java -jar target/guestbook.jar
+    $ sudo java -jar target/guestbook.jar 80
 
 세션에서 나옴    
     
