@@ -9,7 +9,7 @@
 
 
 (defn recaptcha-valid? [g-recaptcha-response]
-  (let [valid (recaptcha/verify "6LcUqAwTAAAAAMUjkfdBGPUuQVJ0OZy4tBcVq-8J" g-recaptcha-response)]
+  (let [valid (recaptcha/verify "6Lcwig4TAAAAAJ8ItrmnDxYnXJwzPWmeWRCz1y3D" g-recaptcha-response)]
     (:valid? valid)))
 
 (defn go-page [{:keys [flash]}]
