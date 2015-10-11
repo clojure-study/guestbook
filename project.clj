@@ -25,8 +25,12 @@
 
                  [clj-recaptcha "0.0.2"]
 
-                 [clj-http "2.0.0"]
                  [mavericklou/clj-facebook-graph "0.5.3"]
+
+                 [org.clojure/data.json "0.2.6"]
+                 [clj-http "2.0.0"]
+                 [slingshot "0.12.2"]
+                 [com.cemerick/url "0.1.1"]
                  ]
 
   :min-lein-version "2.0.0"
