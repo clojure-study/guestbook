@@ -12,7 +12,7 @@
    :scope ["email"]})
 
 (defn get-facebook-user [facebook-id]
-  (first (db/get-facebook-user {:facebookid facebook-id})))
+  (first (db/get-user-by-loginid {:logintype "facebook" :loginid facebook-id})))
 
 (defn goto-guestbooks [user]
   (-> (redirect "/guestbooks")
@@ -23,7 +23,8 @@
   (with-facebook-auth {:access-token token}
     (let [me (client/get [:me])
           new-user {:name (:name (:body me))
-                    :facebookid facebook-id
+                    :logintype "facebook"
+                    :loginid facebook-id
                     :password ""
                     :timestamp (Date.)}]
       (db/save-user! new-user)

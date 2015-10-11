@@ -27,15 +27,25 @@ WHERE id::varchar = :id
 
 --name:save-user!
 -- creates a new user
-INSERT INTO users (name, facebookid,password, timestamp) VALUES (:name,:facebookid, :password, :timestamp)
+INSERT INTO users (name, logintype, loginid, password, timestamp)
+VALUES (:name, :logintype, :loginid, :password, :timestamp)
+
+--name:save-user<!
+-- creates a new user and return inserted row
+INSERT INTO users (name, logintype, loginid, password, timestamp)
+VALUES (:name, :logintype, :loginid, :password, :timestamp)
 
 --name:check-user-exists
 SELECT * from users
 WHERE name = :name
 
---name:get-facebook-user
+--name:get-user
 SELECT * from users
-WHERE facebookid = :facebookid
+WHERE user_id=:userid
+
+--name:get-user-by-loginid
+SELECT * from users
+WHERE logintype = :logintype AND loginid = :loginid
 
 --name:signin-user
 -- select user with name and password
