@@ -12,7 +12,11 @@ http://52.68.124.223
 ### 2. PostgreSQL 설치 및 실행
 [http://www.postgresql.org/download/](http://www.postgresql.org/download/) 에서 OS에 따라 설치하고 실행한다.
 
+##### 맥 사용자의 경우
 맥의 경우 가장 쉬운 방법은 다음과 같다: [http://postgresapp.com/](http://postgresapp.com/) 에서 다운로드하고, `/Applications`로 옮기고, 더블클릭하여 실행한다.
+
+##### 우분투 사용자의 경우 쉬운 설정방법
+로컬 개발용 쉬운 설정 방법은 [링크](https://github.com/soulawaker/PostgreSQL-for-UBUNTU/blob/master/Ubutu-postgreSQL.md#다른-서버-설정-방법쉬운-방법)의 내용을 참조한다.
 
 ### 3. psql 접속 및 User, Database  생성 
 psql 에 접속하여  user 와 Database 를 생성한다. 
