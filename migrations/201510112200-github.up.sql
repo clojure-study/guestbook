@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN logintype VARCHAR(30), ADD COLUMN loginid VARCHAR(50), DROP COLUMN facebookid;

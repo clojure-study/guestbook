@@ -46,7 +46,10 @@
       errors)))
 
 (defn save-user! [params]
-  (do (db/save-user! (assoc params :facebookid "" :timestamp (Date.)))
+  (do (db/save-user! (merge {:logintype "guestbook"
+                             :loginid nil
+                             :timestamp (Date.)}
+                            params))
       (redirect "/login")))
 
 (defn signup!
