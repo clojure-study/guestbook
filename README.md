@@ -48,7 +48,7 @@ psql 에 접속하여  user 와 Database 를 생성한다.
 #### 파일 업로드
     $ scp -i "clojurestudy-aws.pem" .lein-env ec2-user@52.68.124.223:~
     $ scp -i "clojurestudy-aws.pem" target/guestbook.jar ec2-user@52.68.124.223:~/target
-여기에서 path는 배포자의 개발 환경에 따라 다를 수 있음
+pem 파일의 path는 배포자에 따라 다를 수 있음. 또한, .lein-env에서 :production이 true임을 주의하자.
 
 #### 서버 재시작
 ssh로 접속하여 screen 세션에 들어감
