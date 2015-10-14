@@ -1,12 +1,14 @@
 --name:save-message!
 -- creates a new message
-INSERT INTO guestbook
-(name, message, timestamp)
-VALUES (:name, :message, :timestamp)
+INSERT INTO guestbook (user_id, message, timestamp)
+VALUES (:userid, :message, :timestamp)
 
 --name:get-messages
 -- selects all available messages
-SELECT * from guestbook ORDER BY TIMESTAMP desc
+SELECT g.id, g.user_id, u.name, u.logintype, g.message, g.timestamp
+from guestbook g
+INNER JOIN users u ON g.user_id = u.user_id
+ORDER BY g.TIMESTAMP DESC
 
 --name:delete-message!
 -- delete messages
@@ -50,7 +52,9 @@ WHERE logintype = :logintype AND loginid = :loginid
 --name:signin-user
 -- select user with name and password
 SELECT * from users
-WHERE name = :name AND password = :password
+WHERE logintype = 'guestbook'
+AND name = :name
+AND password = :password
 
 --name:get-names
 -- get names

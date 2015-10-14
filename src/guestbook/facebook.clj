@@ -17,6 +17,7 @@
 (defn goto-guestbooks [user]
   (-> (redirect "/guestbooks")
       (assoc-in [:session :user-id] (:user_id user))
+      (assoc-in [:session :logintype] (:logintype user))
       (assoc-in [:session :user-name] (:name user))))
 
 (defn sign-up [facebook-id token]

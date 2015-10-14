@@ -86,12 +86,11 @@
 
 
 (defn sign-up [name github-id]
-  (when-not (duplicated-name? {:name name})
-    (db/save-user<! {:name name
-                     :logintype "github"
-                     :loginid github-id
-                     :password nil
-                     :timestamp (Date.)})))
+  (db/save-user<! {:name name
+                   :logintype "github"
+                   :loginid github-id
+                   :password nil
+                   :timestamp (Date.)}))
 
 
 (defn sign-in [user-info]
@@ -110,11 +109,13 @@
           (-> (redirect "/login"))
           (-> (redirect "/guestbooks")
               (assoc-in [:session :user-id] (:user_id user))
+              (assoc-in [:session :logintype] (:logintype user))
               (assoc-in [:session :user-name] (:name user)))))
 
       (let [user (first (db/get-user {:userid user-id}))]
         (-> (redirect "/guestbooks")
             (assoc-in [:session :user-id] (:user_id user))
+            (assoc-in [:session :logintype] (:logintype user))
             (assoc-in [:session :user-name] (:name user))))
       )))
 

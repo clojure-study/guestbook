@@ -5,8 +5,8 @@
     {% csrf-field %}
     <input class="form-control"
            type="hidden"
-           name="name"
-           value="{{session.user-name}}"
+           name="userid"
+           value="{{session.user-id}}"
            readonly
             />
     {% if errors.name %}
@@ -28,14 +28,21 @@
 <ul class="messages">
     {% for item in messages %}
     <li>
+	  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"></link>
+	    {% ifequal item.logintype "github" %}
+	      <i class="fa fa-github-square fa-x"></i>
+		{% endifequal %}
+	    {% ifequal item.logintype "facebook" %}
+		  <i class="fa fa-facebook-square fa"></i>
+		{% endifequal %}
         {{item.name}} <time>{{item.timestamp|date:"yyyy-MM-dd HH:mm"}}</time>
-        {% ifequal item.name session.user-name %}
+        {% ifequal item.user_id session.user-id %}
         <input type="submit" form="delete-form-{{item.id}}"  class="btn btn-primary" value="delete" />
         <a href="/guestbooks/{{item.id}}/edit" class="btn btn-primary"> update </a>
         {% endifequal %}
         <pre>{{item.message}}</pre>
 
-        {% ifequal item.name session.user-name %}
+        {% ifequal item.user_id session.user-id %}
         <form id="delete-form-{{item.id}}" method="post" action="/guestbooks/{{item.id}}">
             {% csrf-field %}
             <input name="_method" type="hidden" value="DELETE">
