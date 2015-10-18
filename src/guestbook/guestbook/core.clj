@@ -12,7 +12,7 @@
   (first
     (b/validate
       params
-      :name v/required
+      :userid v/required
       :message [v/required [v/min-count 10]])))
 
 (defn save-message! [{:keys [session params]}]
@@ -21,8 +21,10 @@
     (if-let [errors (validate-message params)]
       (-> (redirect "/guestbooks")
           (assoc :flash (assoc params :errors errors)))
-      (do
-        (db/save-message! (assoc params :timestamp (Date.)))
+      (let [new-message {:userid (Integer/parseInt (:userid params))
+                         :message (:message params)
+                         :timestamp (Date.)}]
+        (db/save-message! new-message)
         (redirect "/guestbooks")))
     (redirect "/login")
     ))
