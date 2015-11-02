@@ -7,20 +7,18 @@
             [clojure.data.json :as json]
             [guestbook.db :as db]
             [guestbook.signup.core :refer [duplicated-name?]]
+            [environ.core :refer [env]]
             )
   (:import (java.util Date)))
 
 ;; reference
 ;; http://leonid.shevtsov.me/en/oauth2-is-easy
 
-(def oauth2-params
-  {:client-id "9381876682fe62014fa6"
-   :client-secret "80dea85e5101992498df75f417e42d2e537f7ae8"
-   :authorize-uri  "https://github.com/login/oauth/authorize"
-   :redirect-uri "http://localhost:3000/oauth/github/callback"
-   :access-token-uri "https://github.com/login/oauth/access_token"
-   :scope "profile"})
 
+(def oauth2-params
+  (merge {:authorize-uri  "https://github.com/login/oauth/authorize"
+          :access-token-uri "https://github.com/login/oauth/access_token"}
+         (env :github)))
 
 (defn authorize-uri [client-params csrf-token]
   (str

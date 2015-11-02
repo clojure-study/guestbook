@@ -1,7 +1,6 @@
 (ns guestbook.routes
   (:require [guestbook.layout :as layout]
             [guestbook.guestbook.core :as guestbook]
-            [guestbook.facebook :refer [facebook-callback]]
             [compojure.core :refer [defroutes GET POST DELETE PUT]]
             [ring.util.response :refer [content-type response]]
             [ring.util.http-response :refer [ok]]
@@ -44,8 +43,6 @@
            (GET "/login" [] (login-page))
            (POST "/login" request (login! request))
            (POST "/logout" request (logout! request))
-
-           (GET "/login/facebook/callback" request (facebook-callback request))
 
            (GET "/signup" request (signup/go-page request))
            (POST "/signup" request (signup/signup! request))

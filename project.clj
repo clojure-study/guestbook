@@ -61,14 +61,21 @@
              :env {:production true
                    :db-spec {:classname   "org.postgresql.Driver"
                              :subprotocol "postgresql"
-                             :subname     "//127.0.0.1:5432/cks"
-                             :user        "cks"
-                             :password    "zmfhfwjzhfldktmxjel"
+                             :subname     "//localhost:5432/test_db"
+                             :user        "test_user"
+                             :password    "qwe123"
                              :make-pool?  true
                              :naming      {:keys   clojure.string/lower-case
                                            :fields clojure.string/upper-case}
-                             }}
-
+                             }
+                   :github {:client-id "9381876682fe62014fa6"
+                            :client-secret "80dea85e5101992498df75f417e42d2e537f7ae8"
+                            :redirect-uri "http://localhost:3000/oauth/github/callback"
+                            :scope "profile"}
+                   :facebook {:client-id "1068136783211255"
+                              :client-secret "d36aa393d055fc311ff097ba2dc40719"
+                              :redirect-uri "http://52.68.124.223/login/facebook/callback"
+                              :scope ["email"]}}
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
@@ -81,14 +88,22 @@
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
          :env {:dev true
+               :hostname "nil.camp"
                :db-spec {:classname   "org.postgresql.Driver"
                          :subprotocol "postgresql"
-                         :subname     "//127.0.0.1:5432/cks"
-                         :user        "cks"
-                         :password    "zmfhfwjzhfldktmxjel"
+                         :subname     "//localhost:5432/test_db"
+                         :user        "test_user"
+                         :password    "qwe123"
                          :make-pool?  true
                          :naming      {:keys   clojure.string/lower-case
                                        :fields clojure.string/upper-case}
                          }
-               }
+               :github {:client-id "9381876682fe62014fa6"
+                        :client-secret "80dea85e5101992498df75f417e42d2e537f7ae8"
+                        :redirect-uri "http://localhost:3000/oauth/github/callback"
+                        :scope "profile"}
+               :facebook {:client-id "1068136783211255"
+                          :client-secret "d36aa393d055fc311ff097ba2dc40719"
+                          :redirect-uri "http://52.68.124.223/login/facebook/callback"
+                          :scope ["email"]}}
          }})
