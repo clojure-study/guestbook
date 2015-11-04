@@ -28,14 +28,14 @@
         {% if session.user-id %}
         Hello! {{session.user-name}}
         {% else %}
-        guestbook
+        nil.camp
         {% endif %}
       </a>
     </div>
     <div id="bs-navbar" class="navbar-collapse collapse ">
       <ul class="nav navbar-nav">
         <li {% ifequal page "guestbooks.html" %} class="active"{%endifequal%}>
-        <a href="{{servlet-context}}/guestbooks">Guest Books</a>
+        <a href="{{servlet-context}}/guestbooks">Free Board</a>
         </li>
         {% if session.user-id %}
         <li {% ifequal page "admin.html" %} class="active"{%endifequal%}>
