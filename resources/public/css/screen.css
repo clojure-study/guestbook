@@ -1,5 +1,5 @@
 body {
-    padding-top: 50px;
+    padding-top: 65px;
     /*
     height: 100%;
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -43,4 +43,3 @@ form[action="/signup"],
     position: relative;
     background: white;
 }
-
