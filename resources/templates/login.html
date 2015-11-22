@@ -1,25 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- facebook sdk download -->
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.4&appId=1068136783211255";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-
-<script>
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      // send access-token to application callback url
-      location.href='/login/facebook/callback?facebook-id=' + response.authResponse.userID + '&token=' + response.authResponse.accessToken;
-    });
-  }
-</script>
-
 <div class="row">
     <div class="span12">
         <div class="comment">
@@ -57,9 +38,13 @@
                 {% endif %}
                 <input type="submit" class="btn btn-primary" value="Log in" />
 
-				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-				</fb:login-button>
             </form>
+
+			<div class="col-sm-4 social-buttons">
+			  <a class="btn btn-block btn-social btn-facebook" href="/oauth/facebook/login">
+				<i class="fa fa-facebook"></i> Sign in with Facebook
+			  </a>
+			</div>
 
 			<div class="col-sm-4 social-buttons">
 			  <a class="btn btn-block btn-social btn-github" href="/oauth/github/login">
