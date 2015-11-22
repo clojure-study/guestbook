@@ -75,7 +75,7 @@
                    :facebook {:client-id "client-id"
                               :client-secret "client-secret"
                               :redirect-uri "http://localhost:3000/oauth/facebook/callback"
-                              :scope ["email"]}}
+                              :scope "email"}}
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
@@ -105,6 +105,6 @@
                :facebook {:client-id "client-id"
                           :client-secret "client-secret"
                           :redirect-uri "http://localhost:3000/oauth/facebook/callback"
-                          :scope ["email"]}
+                          :scope "email"}
                }
          }})
