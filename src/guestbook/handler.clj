@@ -4,6 +4,7 @@
             [guestbook.middleware :as middleware]
             [guestbook.session :as session]
             [guestbook.github :refer [oauth2-github-routes]]
+            [guestbook.facebook :refer [oauth2-facebook-routes]]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
             [taoensso.timbre.appenders.rotor :as rotor]
@@ -71,6 +72,7 @@
   (-> (routes
         (wrap-routes #'app-routes middleware/wrap-csrf)
         #'oauth2-github-routes
+        #'oauth2-facebook-routes
         #'base-routes)
       middleware/wrap-session
       middleware/wrap-base))
