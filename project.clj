@@ -68,13 +68,13 @@
                              :naming      {:keys   clojure.string/lower-case
                                            :fields clojure.string/upper-case}
                              }
-                   :github {:client-id "9381876682fe62014fa6"
-                            :client-secret "80dea85e5101992498df75f417e42d2e537f7ae8"
+                   :github {:client-id "github-id"
+                            :client-secret "github-secret"
                             :redirect-uri "http://localhost:3000/oauth/github/callback"
                             :scope "profile"}
-                   :facebook {:client-id "1068136783211255"
-                              :client-secret "d36aa393d055fc311ff097ba2dc40719"
-                              :redirect-uri "http://52.68.124.223/login/facebook/callback"
+                   :facebook {:client-id "client-id"
+                              :client-secret "client-secret"
+                              :redirect-uri "http://localhost:3000/oauth/facebook/callback"
                               :scope ["email"]}}
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
@@ -98,12 +98,13 @@
                          :naming      {:keys   clojure.string/lower-case
                                        :fields clojure.string/upper-case}
                          }
-               :github {:client-id "9381876682fe62014fa6"
-                        :client-secret "80dea85e5101992498df75f417e42d2e537f7ae8"
+               :github {:client-id "github-id"
+                        :client-secret "github-secret"
                         :redirect-uri "http://localhost:3000/oauth/github/callback"
                         :scope "profile"}
-               :facebook {:client-id "1068136783211255"
-                          :client-secret "d36aa393d055fc311ff097ba2dc40719"
-                          :redirect-uri "http://52.68.124.223/login/facebook/callback"
-                          :scope ["email"]}}
+               :facebook {:client-id "client-id"
+                          :client-secret "client-secret"
+                          :redirect-uri "http://localhost:3000/oauth/facebook/callback"
+                          :scope ["email"]}
+               }
          }})
