@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="span12">
+        <div class="comment">
+
+            {% if session.results %}
+            <div class="info">
+                {% for result in session.results %}
+                {{result}} <br>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/sandbox">
+                {% csrf-field %}
+                <p>
+                    code here:
+                    <textarea class="form-control"
+                        rows="1"
+                        cols="50"
+                        name="expr"></textarea>
+                </p>
+                <p>
+                    <input type="submit" class="btn btn-primary" value="eval" />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
