@@ -1,4 +1,4 @@
-# guestbook
+# nil.camp
 [![Build Status](https://travis-ci.org/clojure-study/guestbook.svg?branch=master)](https://travis-ci.org/clojure-study/guestbook)
 ## 접속주소
 http://52.68.124.223
@@ -25,7 +25,7 @@ psql 에 접속하여  user 와 Database 를 생성한다.
 
 `project.clj` 의 :profiles :dev :db-spec 참고하여 database 를 생성한다.  
 
-    psql# CRATE DATABASE {database name};
+    psql# CREATE DATABASE {database name};
 
 #### User 생성 
 
