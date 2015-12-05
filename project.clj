@@ -31,6 +31,8 @@
                  [clj-http "2.0.0"]
                  [slingshot "0.12.2"]
                  [com.cemerick/url "0.1.1"]
+
+                 [clojail "1.0.6"]
                  ]
 
   :min-lein-version "2.0.0"
