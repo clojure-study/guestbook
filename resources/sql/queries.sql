@@ -54,7 +54,6 @@ WHERE logintype = :logintype AND loginid = :loginid
 SELECT * from users
 WHERE logintype = 'guestbook'
 AND name = :name
-AND password = :password
 
 --name:get-names
 -- get names
