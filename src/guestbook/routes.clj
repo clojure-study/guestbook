@@ -7,16 +7,21 @@
             [guestbook.db :as db]
             [ring.util.response :refer [redirect]]
             [guestbook.signup.core :as signup ]
+            [buddy.hashers :as hashers]
             ))
 (defn login-page []
   (layout/render "login.html"))
 
 (defn login! [{:keys [params]}]
   (if-let [user (first (db/signin-user params))]
-    (-> (redirect "/guestbooks")
-        (assoc-in [:session :user-id] (:user_id user))
-        (assoc-in [:session :user-name] (:name user))
-        )
+    (if (hashers/check (:password params) (:password user))
+      (-> (redirect "/guestbooks")
+          (assoc-in [:session :user-id] (:user_id user))
+          (assoc-in [:session :user-name] (:name user))
+          )
+      (-> (redirect "/login")
+          (assoc :flash (assoc params :errors {:password "Invalid name or password."})))
+      )
     (-> (redirect "/login")
         (assoc :flash (assoc params :errors {:password "Invalid name or password."})))
     ))

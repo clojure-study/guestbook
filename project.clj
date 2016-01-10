@@ -33,6 +33,8 @@
                  [com.cemerick/url "0.1.1"]
 
                  [clojail "1.0.6"]
+
+                 [buddy/buddy-hashers "0.10.0"]
                  ]
 
   :min-lein-version "2.0.0"

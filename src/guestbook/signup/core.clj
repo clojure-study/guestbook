@@ -4,6 +4,7 @@
             [clj-recaptcha.client-v2 :as recaptcha]
             [ring.util.response :refer [redirect]]
             [bouncer.core :as b]
+            [buddy.hashers :as hashers]
             [bouncer.validators :as v])
   (:import (java.util Date)))
 
@@ -46,11 +47,14 @@
       errors)))
 
 (defn save-user! [params]
-  (do (db/save-user! (merge {:logintype "guestbook"
-                             :loginid nil
-                             :timestamp (Date.)}
-                            params))
-      (redirect "/login")))
+  (do
+    (-> params
+        (update-in [:password] hashers/encrypt)
+        (->> (merge {:logintype "guestbook"
+                     :loginid nil
+                     :timestamp (Date.)}))
+        (db/save-user!))
+    (redirect "/login")))
 
 (defn signup!
   ([{:keys [params]}]
