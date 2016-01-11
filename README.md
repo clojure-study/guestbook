@@ -46,9 +46,11 @@ psql 에 접속하여  user 와 Database 를 생성한다.
     $ lein uberjar
     
 #### 파일 업로드
-    $ scp -i "clojurestudy-aws.pem" .lein-env ec2-user@52.68.124.223:~
     $ scp -i "clojurestudy-aws.pem" target/guestbook.jar ec2-user@52.68.124.223:~/target
-pem 파일의 path는 배포자에 따라 다를 수 있음. 또한, .lein-env에서 :production이 true임을 주의하자.
+
+여기서 pem 파일의 path는 배포자에 따라 다를 수 있음. 그리고 환경 설정 파일인 .lein-env의 수정이 필요하면 그것도 업로드한다(옵션).
+
+    $ scp -i "clojurestudy-aws.pem" .lein-env ec2-user@52.68.124.223:~
 
 #### 서버 재시작
 ssh로 접속하여 screen 세션에 들어감
@@ -56,10 +58,10 @@ ssh로 접속하여 screen 세션에 들어감
     $ ssh -i "clojurestudy-aws.pem" ec2-user@52.68.124.223
     $ screen -r
 
-서버 정지하고 80포트로 다시 시작
+서버 정지하고 다시 시작. `-Duser.home=$HOME` 옵션은 샌드박스 기능때문에 필요하게 되었다.
 
     Ctrl + c
-    $ sudo java -jar target/guestbook.jar 80
+    $ sudo java -Duser.home=$HOME -jar target/guestbook.jar 80
 
 세션에서 나옴    
     
