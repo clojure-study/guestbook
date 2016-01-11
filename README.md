@@ -29,7 +29,7 @@ psql 에 접속하여  user 와 Database 를 생성한다.
 
 #### User 생성 
 
-    psql# CREATE USER {user name} WITH PASSWORD {password name};
+    psql# CREATE USER {user name} WITH PASSWORD '{password name}';
 
 ### 4. DB 초기 셋업
     $ lein run migrate
