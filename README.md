@@ -1,7 +1,7 @@
 # nil.camp
 [![Build Status](https://travis-ci.org/clojure-study/guestbook.svg?branch=master)](https://travis-ci.org/clojure-study/guestbook)
-## 접속주소
-http://52.68.124.223
+
+이 프로젝트를 호스팅하고 있었던 http://nil.camp (IP: 52.68.124.223)는 비용때문에 중지되었습니다.
 
 ## 개발 시작하기
 
